@@ -38,7 +38,7 @@ function takePicture(success, error, opts) {
 
                 var imageData = readerEvent.target.result;
 
-                return success(imageData.substr(imageData.indexOf(',') + 1));
+                return success(_imageDataToBlob(imageData.substr(imageData.indexOf(',') + 1)));
             }
 
             reader.readAsDataURL(inputEvent.target.files[0]);
@@ -76,7 +76,7 @@ function capture(success, errorCallback) {
         localMediaStream.stop();
         parent.parentNode.removeChild(parent);
 
-        return success(imageData);
+        return success(_imageDataToBlob(imageData));
     }
 
     navigator.getUserMedia = navigator.getUserMedia ||
@@ -97,6 +97,23 @@ function capture(success, errorCallback) {
     } else {
         alert('Browser does not support camera :(');
     }
+}
+
+function _imageDataToBlob(imageData)
+{
+    var binary = _base64ToArrayBuffer(imageData);
+    var blob = new Blob([binary], {type: 'image/png'});
+    return URL.createObjectURL(blob);
+}
+
+function _base64ToArrayBuffer(base64) {
+    var binary_string =  window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array( len );
+    for (var i = 0; i < len; i++)        {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
 }
 
 module.exports = {
