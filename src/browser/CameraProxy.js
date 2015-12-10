@@ -39,7 +39,7 @@ function takePicture(success, error, opts) {
                 var imageData = readerEvent.target.result;
 
                 return success(_imageDataToBlob(imageData.substr(imageData.indexOf(',') + 1)));
-            }
+            };
 
             reader.readAsDataURL(inputEvent.target.files[0]);
         };
@@ -67,7 +67,7 @@ function capture(success, errorCallback) {
         // create a canvas and capture a frame from video stream
         var canvas = document.createElement('canvas');
         canvas.getContext('2d').drawImage(video, 0, 0, 320, 240);
-        
+
         // convert image stored in canvas to base64 encoded image
         var imageData = canvas.toDataURL('img/png');
         imageData = imageData.replace('data:image/png;base64,', '');
@@ -77,20 +77,20 @@ function capture(success, errorCallback) {
         parent.parentNode.removeChild(parent);
 
         return success(_imageDataToBlob(imageData));
-    }
+    };
 
     navigator.getUserMedia = navigator.getUserMedia ||
-                             navigator.webkitGetUserMedia ||
-                             navigator.mozGetUserMedia ||
-                             navigator.msGetUserMedia;
+        navigator.webkitGetUserMedia ||
+        navigator.mozGetUserMedia ||
+        navigator.msGetUserMedia;
 
     var successCallback = function(stream) {
-        localMediaStream = stream;
+        localMediaStream = stream.getTracks()[0];
         video.src = window.URL.createObjectURL(localMediaStream);
         video.play();
 
         document.body.appendChild(parent);
-    }
+    };
 
     if (navigator.getUserMedia) {
         navigator.getUserMedia({video: true, audio: true}, successCallback, errorCallback);
