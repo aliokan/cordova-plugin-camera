@@ -38,7 +38,7 @@ function takePicture(success, error, opts) {
 
                 var imageData = readerEvent.target.result;
 
-                return success( _imageDataToBlob(imageData.substr(imageData.indexOf(',') + 1)) );
+                return success(_imageDataToBlob(imageData.substr(imageData.indexOf(',') + 1)));
             }
 
             reader.readAsDataURL(inputEvent.target.files[0]);
@@ -76,7 +76,7 @@ function capture(success, errorCallback) {
         localMediaStream.stop();
         parent.parentNode.removeChild(parent);
 
-        return success( _imageDataToBlob(imageData) );
+        return success(_imageDataToBlob(imageData));
     }
 
     navigator.getUserMedia = navigator.getUserMedia ||
