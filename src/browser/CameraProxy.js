@@ -86,7 +86,9 @@ function capture(success, errorCallback) {
 
     var successCallback = function(stream) {
         localMediaStream = stream.getTracks()[0];
-        video.src = window.URL.createObjectURL(localMediaStream);
+        
+        var vendorURL = window.URL || window.webkitURL;
+        video.src = vendorURL.createObjectURL(stream);
         video.play();
 
         document.body.appendChild(parent);
