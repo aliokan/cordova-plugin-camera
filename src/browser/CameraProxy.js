@@ -85,7 +85,7 @@ function capture(success, errorCallback) {
         navigator.msGetUserMedia;
 
     var successCallback = function(stream) {
-        localMediaStream = stream.getTracks()[0];
+        localMediaStream = stream.getVideoTracks()[0];
         
         var vendorURL = window.URL || window.webkitURL;
         video.src = vendorURL.createObjectURL(stream);
@@ -95,7 +95,7 @@ function capture(success, errorCallback) {
     };
 
     if (navigator.getUserMedia) {
-        navigator.getUserMedia({video: true, audio: true}, successCallback, errorCallback);
+        navigator.getUserMedia({video: true, audio: false}, successCallback, errorCallback);
     } else {
         alert('Browser does not support camera :(');
     }
